@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>School Admission Form</title>
+<style>
+  :root { --main:#1e40af; --bg:#f1f5f9; --border:#cbd5e1; --err:#dc2626; --ok:#16a34a; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#0f172a; }
+  header { background:var(--main); color:#fff; padding:20px 16px; text-align:center; }
+  header h1 { margin:0; font-size:1.4rem; }
+  header p { margin:6px 0 0; opacity:.9; font-size:.95rem; }
+  main { max-width:720px; margin:20px auto; padding:0 16px 40px; }
+  form { background:#fff; border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(0,0,0,.06); }
+  fieldset { border:0; padding:0; margin:0 0 20px; }
+  legend { font-weight:700; color:var(--main); font-size:1.05rem; margin-bottom:10px; border-bottom:2px solid var(--bg); width:100%; padding:0 0 6px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .full { grid-column:1/-1; }
+  label { display:block; font-size:.9rem; font-weight:600; margin-bottom:5px; }
+  label span { color:var(--err); }
+  input, select, textarea { width:100%; padding:11px 12px; border:1px solid var(--border); border-radius:8px; font-size:1rem; font-family:inherit; background:#fff; }
+  input:focus, select:focus, textarea:focus { outline:2px solid var(--main); border-color:transparent; }
+  small { color:#64748b; display:block; margin-top:4px; font-size:.8rem; }
+  #preview { width:110px; height:130px; object-fit:cover; border:1px dashed var(--border); border-radius:8px; margin-top:8px; display:none; }
+  button { width:100%; background:var(--main); color:#fff; border:0; padding:14px; font-size:1.05rem; font-weight:700; border-radius:10px; cursor:pointer; }
+  button:disabled { opacity:.6; cursor:not-allowed; }
+  #msg { margin-top:14px; padding:12px; border-radius:8px; display:none; font-weight:600; word-break:break-word; }
+  #msg.err { display:block; background:#fee2e2; color:var(--err); }
+  #msg.ok { display:block; background:#dcfce7; color:var(--ok); }
+  #success { position:fixed; inset:0; background:rgba(15,23,42,.65); display:none; align-items:center; justify-content:center; padding:16px; z-index:100; }
+  #success.show { display:flex; }
+  #success .card { background:#fff; border-radius:16px; padding:28px 22px; max-width:380px; width:100%; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,.3); animation:pop .25s ease-out; }
+  #success .tick { width:72px; height:72px; border-radius:50%; background:var(--ok); color:#fff; font-size:42px; line-height:72px; margin:0 auto 14px; }
+  #success h2 { margin:0 0 8px; color:var(--ok); font-size:1.5rem; }
+  #success p { margin:6px 0; color:#334155; }
+  #success .ref { display:inline-block; margin-top:8px; padding:8px 14px; background:var(--bg); border-radius:8px; font-weight:700; letter-spacing:1px; }
+  #success button { margin-top:18px; }
+  @keyframes pop { from { transform:scale(.85); opacity:0; } to { transform:scale(1); opacity:1; } }
+  @media (max-width:560px){ .grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<header>
+  <h1>🏫 School Admission Form</h1>
+  <p>Kaksha 11 mein pravesh ke liye avedan karein</p>
+</header>
+
+<main>
+  <form id="form" novalidate onsubmit="return false;">
+    <fieldset>
+      <legend>Student ki jaankari</legend>
+      <div class="grid">
+        <div class="full"><label>Student ka poora naam <span>*</span></label><input name="student_name" required></div>
+        <div><label>Pita ka naam <span>*</span></label><input name="father_name" required></div>
+        <div><label>Mata ka naam <span>*</span></label><input name="mother_name" required></div>
+        <div><label>Janm tithi <span>*</span></label><input type="date" name="dob" required></div>
+        <div><label>Ling <span>*</span></label>
+          <select name="gender" required>
+            <option value="">Chunein</option><option>Male</option><option>Female</option><option>Other</option>
+          </select></div>
+        <div><label>Mobile number <span>*</span></label><input type="tel" name="phone" inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" required></div>
+        <div><label>Email</label><input type="email" name="email"></div>
+        <div class="full"><label>Pata <span>*</span></label><textarea name="address" rows="2" required></textarea></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>10th ki jaankari</legend>
+      <div class="grid">
+        <div class="full"><label>Pichhle school ka naam <span>*</span></label><input name="previous_school" required></div>
+        <div><label>Board <span>*</span></label>
+          <select name="board" required>
+            <option value="">Chunein</option><option>RBSE</option><option>CBSE</option><option>Other</option>
+          </select></div>
+        <div><label>Roll number <span>*</span></label><input name="roll_no" required></div>
+        <div><label>Passing year <span>*</span></label><input type="number" name="passing_year" min="2015" max="2030" required></div>
+        <div><label>Percentage (%) <span>*</span></label><input type="number" name="percentage" min="0" max="100" step="0.01" required></div>
+        <div class="full"><label>Kis class mein admission chahiye <span>*</span></label>
+          <select name="applied_class" required>
+            <option value="">Chunein</option><option>11th Arts</option><option>11th Science</option><option>11th Commerce</option>
+          </select></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Documents</legend>
+      <div class="grid">
+        <div>
+          <label>Photo (PNG) <span>*</span></label>
+          <input type="file" id="photo" accept="image/png" required>
+          <small>Sirf .png, 1 MB se kam</small>
+          <img id="preview" alt="Photo preview">
+        </div>
+        <div>
+          <label>10th ki Marksheet (PDF) <span>*</span></label>
+          <input type="file" id="marksheet" accept="application/pdf" required>
+          <small>Sirf .pdf, 2 MB se kam</small>
+        </div>
+      </div>
+    </fieldset>
+
+    <button type="submit" id="btn">Form Submit Karein</button>
+    <div id="msg"></div>
+  </form>
+</main>
+
+<div id="success" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+  <div class="card">
+    <div class="tick">✓</div>
+    <h2 id="successTitle">Success!</h2>
+    <p>Aapka admission form safaltapurvak submit ho gaya hai.</p>
+    <p>Hum jaldi hi aapse sampark karenge.</p>
+    <div class="ref" id="refBox" style="display:none"></div>
+    <button type="button" id="okBtn">Theek hai</button>
+  </div>
+</div>
+
+<script>
+  const ENDPOINT = "/.netlify/functions/submit";
+  const MAX_PHOTO = 1 * 1024 * 1024;
+  const MAX_PDF = 2 * 1024 * 1024;
+
+  const form = document.getElementById("form");
+  const btn = document.getElementById("btn");
+  const msg = document.getElementById("msg");
+  const photoIn = document.getElementById("photo");
+  const pdfIn = document.getElementById("marksheet");
+  const preview = document.getElementById("preview");
+
+  function show(type, text) {
+    msg.className = type; msg.textContent = text;
+    msg.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  window.addEventListener("error", (ev) => show("err", "Script error: " + ev.message));
+
+  document.getElementById("okBtn").addEventListener("click", () => {
+    document.getElementById("success").classList.remove("show");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  photoIn.addEventListener("change", () => {
+    const f = photoIn.files[0];
+    if (f && f.type === "image/png") { preview.src = URL.createObjectURL(f); preview.style.display = "block"; }
+    else preview.style.display = "none";
+  });
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).split(",")[1]);
+      r.onerror = () => reject(new Error("File padhne me dikkat aayi."));
+      r.readAsDataURL(file);
+    });
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    msg.className = ""; msg.style.display = "none";
+
+    const bad = form.querySelector(":invalid");
+    if (bad) {
+      const box = bad.closest("div");
+      const lab = box && box.querySelector("label");
+      bad.focus();
+      return show("err", "Ye field sahi bharein: " + (lab ? lab.textContent.replace("*", "").trim() : (bad.name || "file")));
+    }
+
+    const photo = photoIn.files[0], pdf = pdfIn.files[0];
+    if (!photo || !pdf) return show("err", "Photo aur marksheet dono upload karein.");
+    if (photo.type !== "image/png" || !photo.name.toLowerCase().endsWith(".png")) return show("err", "Photo sirf PNG format mein honi chahiye.");
+    if (pdf.type !== "application/pdf" || !pdf.name.toLowerCase().endsWith(".pdf")) return show("err", "Marksheet sirf PDF format mein honi chahiye.");
+    if (photo.size > MAX_PHOTO) return show("err", "Photo 1 MB se kam honi chahiye.");
+    if (pdf.size > MAX_PDF) return show("err", "Marksheet PDF 2 MB se kam honi chahiye.");
+
+    btn.disabled = true; btn.textContent = "Submit ho raha hai...";
+    try {
+      const fields = Object.fromEntries(new FormData(form).entries());
+      const body = {
+        fields,
+        photo: { data: await toBase64(photo) },
+        marksheet: { data: await toBase64(pdf) },
+      };
+
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      let out = {};
+      try { out = await res.json(); } catch { /* json nahi aaya */ }
+
+      if (res.status === 404) throw new Error("Function nahi mila. Poora folder (netlify folder samet) deploy karna hoga, sirf index.html nahi.");
+      if (!res.ok || !out.ok) throw new Error(out.error || ("Server error " + res.status));
+
+      form.reset(); preview.style.display = "none";
+      const refBox = document.getElementById("refBox");
+      if (out.ref) { refBox.textContent = "Reference No: " + out.ref; refBox.style.display = "inline-block"; }
+      else refBox.style.display = "none";
+      document.getElementById("success").classList.add("show");
+      show("ok", "✅ Success! Aapka admission form safaltapurvak submit ho gaya.");
+    } catch (err) {
+      console.error(err);
+      show("err", "❌ " + err.message);
+    } finally {
+      btn.disabled = false; btn.textContent = "Form Submit Karein";
+    }
+  });
+</script>
+</body>
+</html>
