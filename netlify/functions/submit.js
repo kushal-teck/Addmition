@@ -70,7 +70,7 @@ exports.handler = async (event) => {
   // File ke asli type ki jaanch (sirf naam par bharosa nahi)
   const isPng = photoBuf.slice(0, 4).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47]));
   const isPdf = pdfBuf.slice(0, 4).toString() === "%PDF";
-  if (!isPng) return json(400, { error: "Photo asli PNG file honi chahiye." });
+  if (!isPng) return json(400, { error: "Photo me bosda asli hona chahiye." });
   if (!isPdf) return json(400, { error: "Marksheet asli PDF file honi chahiye." });
 
   const id = require("crypto").randomUUID();
